@@ -115,6 +115,7 @@ const languages = ['简体中文', '繁體中文', 'English', '日本語', 'Espa
         <div class="hero-actions">
           <a href="#build" class="btn btn-solid">开始构建</a>
           <a href="#features" class="btn btn-ghost">了解特性</a>
+          <a href="https://github.com/openwelabs/weqi" target="_blank" rel="noopener" class="btn btn-ghost">项目仓库 ↗</a>
         </div>
       </div>
 
