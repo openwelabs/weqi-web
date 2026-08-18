@@ -1,0 +1,74 @@
+:root {
+  /* 深色主题：墨黑底 + 纸白字，外加一抹棋盘绒布绿 */
+  --ink: #fafaf8;      /* 文字（浅色） */
+  --paper: #111111;    /* 背景（深色） */
+  --felt: #4f9d78;     /* 绒布绿（深色底上更亮） */
+  --felt-soft: #1c2b24;/* 柔和的深绿 */
+  --line: #2a2a28;     /* 细线边框 */
+  --muted: #9a9a94;    /* 次要文字 */
+
+  --font-sans: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, "Cascadia Code", monospace;
+
+  --maxw: 1080px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--felt);
+  color: var(--paper);
+}
+
+/* 通用容器 */
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* 章节标题 */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--felt);
+  margin-bottom: 1.2rem;
+}
+
+.section-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.section-sub {
+  color: var(--muted);
+  max-width: 60ch;
+  font-size: 1.02rem;
+}
