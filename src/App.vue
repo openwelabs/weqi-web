@@ -1,8 +1,23 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t, locale } = useI18n()
+
 // 导航链接
 const nav = [
-  { label: '主页', to: '/' },
-  { label: '下载', to: '/download' },
+  { label: () => t('nav.home'), to: '/' },
+  { label: () => t('nav.download'), to: '/download' },
+]
+
+// 支持的语言
+const languages = [
+  { code: 'zh-Hans', label: '简体中文' },
+  { code: 'zh-Hant', label: '繁體中文' },
+  { code: 'en', label: 'English' },
+  { code: 'ja', label: '日本語' },
+  { code: 'es', label: 'Español' },
+  { code: 'uk', label: 'Українська' },
+  { code: 'ko', label: '한국어' },
 ]
 </script>
 
@@ -14,9 +29,16 @@ const nav = [
         <span class="brand-mark">♞</span>
         <span class="brand-name">Weqi</span>
       </router-link>
-      <nav class="nav-links">
-        <router-link v-for="item in nav" :key="item.to" :to="item.to">{{ item.label }}</router-link>
-      </nav>
+      <div class="nav-right">
+        <nav class="nav-links">
+          <router-link v-for="item in nav" :key="item.to" :to="item.to">{{ item.label() }}</router-link>
+        </nav>
+        <div class="lang-switch">
+          <select v-model="locale" class="lang-select" aria-label="Language">
+            <option v-for="lang in languages" :key="lang.code" :value="lang.code">{{ lang.label }}</option>
+          </select>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -32,8 +54,8 @@ const nav = [
         <span class="brand-mark">♞</span>
         <span>Weqi</span>
       </div>
-      <p class="footer-note">开源 · 现代 · 简洁的桌面国际象棋</p>
-      <p class="footer-license">Open Source</p>
+      <p class="footer-note">{{ t('footer.note') }}</p>
+      <p class="footer-license">{{ t('footer.license') }}</p>
     </div>
   </footer>
 </template>
@@ -69,6 +91,12 @@ const nav = [
   color: var(--felt);
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
 .nav-links {
   display: flex;
   gap: 28px;
@@ -85,6 +113,50 @@ const nav = [
 }
 
 .nav-links a.router-link-active {
+  color: var(--ink);
+}
+
+/* ===== 语言切换 ===== */
+.lang-switch {
+  position: relative;
+}
+
+.lang-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  padding: 6px 30px 6px 12px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.lang-select:hover {
+  border-color: var(--felt);
+}
+
+.lang-select:focus {
+  outline: none;
+  border-color: var(--felt);
+}
+
+.lang-switch::after {
+  content: '▾';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.7rem;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.lang-select option {
+  background: var(--paper);
   color: var(--ink);
 }
 
@@ -129,6 +201,10 @@ const nav = [
 @media (max-width: 600px) {
   .nav-links {
     gap: 20px;
+  }
+
+  .nav-right {
+    gap: 16px;
   }
 }
 </style>

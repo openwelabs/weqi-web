@@ -1,80 +1,16 @@
 <script setup>
-// 四种游戏模式
-const modes = [
-  {
-    glyph: '♞',
-    title: '真人对战',
-    desc: '同一设备上双人对弈，本地引擎实时校验每一步走法。',
-  },
-  {
-    glyph: '♛',
-    title: '人机对战',
-    desc: '接入你选择的 AI 提供商，与任意模型对弈。',
-  },
-  {
-    glyph: '♜',
-    title: 'AI 对战',
-    desc: '两个 AI 自动对弈，可开始 / 暂停 / 继续 / 停止，不计入战绩。',
-  },
-  {
-    glyph: '♝',
-    title: '复盘',
-    desc: '回顾历史对局，重温每一步的落子与胜负。',
-  },
-]
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-// 核心特性
-const features = [
-  {
-    title: '完整棋规',
-    desc: '合法走法校验、将军、将死、逼和、王车易位、吃过路兵、升变……全部在本地 C++ 引擎中实现。',
-  },
-  {
-    title: '玩家资料与 Rating',
-    desc: '追踪你的 Rating 与最佳 Rating，随时编辑玩家名称。',
-  },
-  {
-    title: '战绩统计',
-    desc: '对局数、胜率、胜、和、负、最高连胜、当前连胜、最佳 Rating，一目了然。',
-  },
-  {
-    title: '对局历史',
-    desc: '浏览过往对局，包含日期、模式、对手、结果与 Rating 变化。',
-  },
-  {
-    title: '继续未完成对局',
-    desc: '随时恢复进行中的对局，落子不中断。',
-  },
-  {
-    title: 'AI 聊天',
-    desc: 'AI 会对其走法做简短点评，消息语言跟随界面语言。',
-  },
-]
+const { t, tm } = useI18n()
 
-// 技术栈
-const stack = [
-  { name: 'C++17', role: '核心引擎与棋规' },
-  { name: 'Qt 6', role: '桌面界面（Widgets）' },
-  { name: 'CMake', role: '构建系统' },
-  { name: 'Python 3', role: 'AI 适配器' },
-]
-
-// 构建步骤
-const buildSteps = [
-  { cmd: 'cmake -S . -B build', note: '配置' },
-  { cmd: 'cmake --build build -j', note: '编译' },
-  { cmd: './build/Weqi', note: '运行' },
-]
-
-// 数据存储
-const dataItems = [
-  { label: '设置与资料', path: '~/.local/share/Weqi/' },
-  { label: 'AI 提供商配置', path: '用户数据目录（独立存储）' },
-  { label: '对局历史与存档', path: '用户数据目录' },
-]
-
-// 国际化语言
-const languages = ['简体中文', '繁體中文', 'English', '日本語', 'Español', 'Українська', '한국어']
+// 各区块数据均从 i18n 消息中读取，随语言切换
+const modes = computed(() => tm('modes.items'))
+const features = computed(() => tm('features.items'))
+const stack = computed(() => tm('stack.items'))
+const buildSteps = computed(() => tm('build.steps'))
+const dataItems = computed(() => tm('data.items'))
+const languages = computed(() => tm('i18n.languages'))
 </script>
 
 <template>
@@ -82,18 +18,15 @@ const languages = ['简体中文', '繁體中文', 'English', '日本語', 'Espa
   <section id="top" class="hero">
     <div class="container hero-inner">
       <div class="hero-text">
-        <p class="hero-kicker">MODERN · OPEN SOURCE · DESKTOP</p>
+        <p class="hero-kicker">{{ t('hero.kicker') }}</p>
         <h1 class="hero-title">
-          现代、简洁的<br />
-          开源桌面国际象棋
+          {{ t('hero.title1') }}<br />
+          {{ t('hero.title2') }}
         </h1>
-        <p class="hero-sub">
-          所有棋规均在本地 C++ 引擎中实现。支持真人对战、人机对战、AI 对战与复盘，
-          7 种界面语言，运行时即可切换。
-        </p>
+        <p class="hero-sub">{{ t('hero.sub') }}</p>
         <div class="hero-actions">
-          <router-link to="/download" class="btn btn-solid">立即下载</router-link>
-          <a href="https://github.com/openwelabs/weqi" target="_blank" rel="noopener" class="btn btn-ghost">项目仓库 ↗</a>
+          <router-link to="/download" class="btn btn-solid">{{ t('hero.download') }}</router-link>
+          <a href="https://github.com/openwelabs/weqi" target="_blank" rel="noopener" class="btn btn-ghost">{{ t('hero.repo') }}</a>
         </div>
       </div>
 
@@ -111,7 +44,7 @@ const languages = ['简体中文', '繁體中文', 'English', '日本語', 'Espa
   <!-- 游戏模式 -->
   <section class="modes">
     <div class="container">
-      <p class="section-label">四种游戏模式</p>
+      <p class="section-label">{{ t('modes.label') }}</p>
       <div class="modes-grid">
         <div v-for="m in modes" :key="m.title" class="mode-card">
           <span class="mode-glyph">{{ m.glyph }}</span>
@@ -125,9 +58,9 @@ const languages = ['简体中文', '繁體中文', 'English', '日本語', 'Espa
   <!-- 特性 -->
   <section id="features" class="features">
     <div class="container">
-      <p class="section-label">核心特性</p>
-      <h2 class="section-title">不止是下棋</h2>
-      <p class="section-sub">从完整的棋规引擎，到资料、战绩与对局历史，Weqi 把桌面国际象棋体验做到干净利落。</p>
+      <p class="section-label">{{ t('features.label') }}</p>
+      <h2 class="section-title">{{ t('features.title') }}</h2>
+      <p class="section-sub">{{ t('features.sub') }}</p>
 
       <div class="features-grid">
         <div v-for="(f, i) in features" :key="f.title" class="feature-item">
@@ -142,8 +75,8 @@ const languages = ['简体中文', '繁體中文', 'English', '日本語', 'Espa
   <!-- 技术栈 -->
   <section id="stack" class="stack">
     <div class="container">
-      <p class="section-label">技术栈</p>
-      <h2 class="section-title">扎实的底层</h2>
+      <p class="section-label">{{ t('stack.label') }}</p>
+      <h2 class="section-title">{{ t('stack.title') }}</h2>
       <div class="stack-list">
         <div v-for="s in stack" :key="s.name" class="stack-row">
           <span class="stack-name">{{ s.name }}</span>
@@ -156,9 +89,9 @@ const languages = ['简体中文', '繁體中文', 'English', '日本語', 'Espa
   <!-- 构建 -->
   <section id="build" class="build">
     <div class="container">
-      <p class="section-label">构建</p>
-      <h2 class="section-title">三步运行</h2>
-      <p class="section-sub">依赖：CMake ≥ 3.16、Qt 6（≥ 6.2，含 Widgets）、支持 C++17 的编译器、Python 3。</p>
+      <p class="section-label">{{ t('build.label') }}</p>
+      <h2 class="section-title">{{ t('build.title') }}</h2>
+      <p class="section-sub">{{ t('build.sub') }}</p>
 
       <div class="build-steps">
         <div v-for="(b, i) in buildSteps" :key="b.cmd" class="build-step">
@@ -173,9 +106,9 @@ const languages = ['简体中文', '繁體中文', 'English', '日本語', 'Espa
   <!-- 数据存储 -->
   <section id="data" class="data">
     <div class="container">
-      <p class="section-label">数据存储</p>
-      <h2 class="section-title">隐私优先</h2>
-      <p class="section-sub">设置、资料与对局历史均存储在系统用户数据目录，AI 提供商配置独立存放，API Key 永不写入项目。</p>
+      <p class="section-label">{{ t('data.label') }}</p>
+      <h2 class="section-title">{{ t('data.title') }}</h2>
+      <p class="section-sub">{{ t('data.sub') }}</p>
 
       <div class="data-list">
         <div v-for="d in dataItems" :key="d.label" class="data-row">
@@ -189,8 +122,8 @@ const languages = ['简体中文', '繁體中文', 'English', '日本語', 'Espa
   <!-- 国际化 -->
   <section class="i18n">
     <div class="container">
-      <p class="section-label">国际化</p>
-      <h2 class="section-title">7 种语言，运行时切换</h2>
+      <p class="section-label">{{ t('i18n.label') }}</p>
+      <h2 class="section-title">{{ t('i18n.title') }}</h2>
       <div class="lang-chips">
         <span v-for="lang in languages" :key="lang" class="lang-chip">{{ lang }}</span>
       </div>

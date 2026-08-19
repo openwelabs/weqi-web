@@ -1,45 +1,29 @@
 <script setup>
-// 各系统下载项
-const downloads = [
-  {
-    os: 'Linux',
-    format: 'AppImage',
-    note: '所有 Linux 发行版通用',
-    url: 'https://github.com/openwelabs/weqi/releases/download/1.0.0/weqi_v1.0.0-apig-x86_64.AppImage',
-  },
-  {
-    os: 'Debian / Ubuntu / Mint',
-    format: '.deb',
-    note: 'Debian 系发行版安装包',
-    url: 'https://github.com/openwelabs/weqi/releases/download/1.0.0/weqi_v1.0.0-debian-x86_64.deb',
-  },
-  {
-    os: 'Fedora / RHEL / Rocky',
-    format: '.rpm',
-    note: 'Red Hat 系发行版安装包',
-    url: 'https://github.com/openwelabs/weqi/releases/download/1.0.0/weqi_v1.0.0-rhel-x86_64.rpm',
-  },
-  {
-    os: 'Windows',
-    format: '便携版',
-    note: '免安装，解压即用',
-    url: 'https://github.com/openwelabs/weqi/releases/download/1.0.0/weqi_v1.0.0-winPortable-x86_64.zip',
-  },
-  {
-    os: 'Windows',
-    format: '安装包',
-    note: '标准安装程序',
-    url: 'https://github.com/openwelabs/weqi/releases/download/1.0.0/weqi_v1.0.0-winSetup-x86_64.exe',
-  },
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t, tm } = useI18n()
+
+// 各系统下载项：文案来自 i18n，URL 固定
+const urls = [
+  'https://github.com/openwelabs/weqi/releases/download/1.0.0/weqi_v1.0.0-apig-x86_64.AppImage',
+  'https://github.com/openwelabs/weqi/releases/download/1.0.0/weqi_v1.0.0-debian-x86_64.deb',
+  'https://github.com/openwelabs/weqi/releases/download/1.0.0/weqi_v1.0.0-rhel-x86_64.rpm',
+  'https://github.com/openwelabs/weqi/releases/download/1.0.0/weqi_v1.0.0-winPortable-x86_64.zip',
+  'https://github.com/openwelabs/weqi/releases/download/1.0.0/weqi_v1.0.0-winSetup-x86_64.exe',
 ]
+
+const downloads = computed(() =>
+  tm('download.items').map((item, i) => ({ ...item, url: urls[i] })),
+)
 </script>
 
 <template>
   <section class="download">
     <div class="container">
-      <p class="section-label">下载</p>
-      <h1 class="page-title">选择你的系统</h1>
-      <p class="page-sub">Weqi v1.0.0 · 支持 Linux 与 Windows，选择适合你的安装包。</p>
+      <p class="section-label">{{ t('download.label') }}</p>
+      <h1 class="page-title">{{ t('download.title') }}</h1>
+      <p class="page-sub">{{ t('download.sub') }}</p>
 
       <div class="download-list">
         <div v-for="d in downloads" :key="d.format" class="download-card">
@@ -48,7 +32,7 @@ const downloads = [
             <span class="download-format">{{ d.format }}</span>
             <span class="download-note">{{ d.note }}</span>
           </div>
-          <a :href="d.url" target="_blank" rel="noopener" class="btn btn-solid">下载</a>
+          <a :href="d.url" target="_blank" rel="noopener" class="btn btn-solid">{{ t('download.button') }}</a>
         </div>
       </div>
     </div>
