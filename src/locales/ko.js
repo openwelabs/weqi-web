@@ -112,6 +112,8 @@ export default {
       { name: 'MiniMax', baseUrl: 'https://api.minimax.chat/v1', model: 'MiniMax-Text-01', key: 'platform.minimaxi.com' },
       { name: 'Kimi (Moonshot)', baseUrl: 'https://api.moonshot.cn/v1', model: 'moonshot-v1-8k', key: 'platform.moonshot.cn' },
       { name: 'Mimo (Xiaomi)', baseUrl: 'https://api.mimo.ai/v1', model: 'mimo-1', key: 'platform.mimo.ai' },
+      { name: 'Claude (Anthropic)', baseUrl: 'https://api.anthropic.com/v1', model: 'claude-sonnet-4-20250514', key: 'console.anthropic.com' },
+      { name: 'Grok (xAI)', baseUrl: 'https://api.x.ai/v1', model: 'grok-2-latest', key: 'console.x.ai' },
     ],
     note: '참고: 모델 이름과 엔드포인트는 자주 변경됩니다. 최신 모델 ID와 Base URL은 항상 제공업체 공식 문서에서 확인하세요. 「이름」 필드는 직접 선택하는 라벨일 뿐이며, 실제로 호출되는 API에는 영향을 주지 않습니다.',
   },
