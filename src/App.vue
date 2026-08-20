@@ -7,6 +7,7 @@ const { t, locale } = useI18n()
 const nav = [
   { label: () => t('nav.home'), to: '/' },
   { label: () => t('nav.download'), to: '/download' },
+  { label: () => t('nav.addModel'), to: '/add-model' },
 ]
 
 // 支持的语言
